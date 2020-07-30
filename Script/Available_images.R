@@ -1,0 +1,29 @@
+library(rgee)
+library(sf)
+library(tidyverse)
+source('utils.R')
+
+ee_Initialize()
+
+ee_search_dataset() %>% 
+  ee_search_type('ImageCollection') %>% 
+  ee_search_provider('USGS') %>% 
+  ee_search_tags('reflectance') %>% 
+  select(id)
+
+names_id <- c('LANDSAT/LC08/C01/T1_SR',
+        'LANDSAT/LT05/C01/T1_SR',
+        'LANDSAT/LE07/C01/T1_SR')
+
+lista <- img_available(id = names_id,
+                       path = 4, 
+                       row = 71,
+                       cloud = 5)
+
+plot_available_img(name = 'Landsat 5, 7 and 8 ',img_available = lista)
+save_available_img(x = 'plot.png')
+
+
+
+
+
