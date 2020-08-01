@@ -22,8 +22,3 @@ lista <- img_available(id = names_id,
 
 plot_available_img(name = 'Landsat 5, 7 and 8 ',img_available = lista)
 save_available_img(x = 'plot.png')
-
-
-
-
-
