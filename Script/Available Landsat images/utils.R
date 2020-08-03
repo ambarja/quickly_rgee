@@ -3,7 +3,7 @@
 
 # Obtaining available images  ---------------------------------------------
 
-img_available <- function(id, path, row, cloud){
+img_available <- function(id, path, row, cloud = NULL){
   options(dplyr.summarise.inform = FALSE)
   lista <- list()
   for(i in 1:length(id)){
@@ -20,7 +20,7 @@ img_available <- function(id, path, row, cloud){
       mutate(type = str_sub(id[i], start = 9, end = 12)) -> images_date
     
     lista[[i]] <- images_date
-    lista_end <- do.call(rbind, lapply(lista, function(x) as.data.frame((x))))
+    lista_end <- do.call(rbind, lapply(lista, function(x) as.data.frame((x),stringsAsFactors = FALSE)))
   }
   return(lista_end)
 }
@@ -30,7 +30,9 @@ img_available <- function(id, path, row, cloud){
 plot_available_img <- function(name,img_available){
   
   plot_img <- img_available %>% 
-    ggplot(aes(x = anio , y = factor(mes, labels = month.abb))) + 
+    as_tibble() %>% 
+    mutate_if(is.character,as.factor) %>% 
+    ggplot(aes(x = anio , y = factor(mes, labels = month.abb[1:length(levels(mes))]))) + 
     geom_raster(aes(fill = type), alpha = 0.7) + 
     geom_point(aes(size = factor(total)),color = 'black') +
     geom_point(shape = 21 , color = 'white', size = 3) + 

@@ -18,7 +18,7 @@ names_id <- c('LANDSAT/LC08/C01/T1_SR',
 lista <- img_available(id = names_id,
                        path = 4, 
                        row = 71,
-                       cloud = 5)
+                       cloud = 1)
 
 plot_available_img(name = 'Landsat 5, 7 and 8 ',img_available = lista)
 save_available_img(x = 'plot.png')
